@@ -65,7 +65,7 @@ export default function Navbar() {
           <div className="w-full flex-1 md:w-auto md:flex-none">
             <div className="flex md:hidden">
               <Link href="/#home" className="flex items-center space-x-2 cursor-pointer">
-                <div className="flex h-8 w-8 items-center justify-center">
+                <div className="flex h-10 w-10 items-center justify-center">
                   <Image
                     src="/Images/logoWhite.svg"
                     alt="Portfolio Logo"
@@ -114,7 +114,7 @@ export default function Navbar() {
                 <span className="sr-only">Toggle Menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="pr-0">
+            <SheetContent side="left" className="pr-0 bg-[#323647] border-r-0">
               <div className="flex items-center space-x-2 pb-4">
                 <div className="flex h-8 w-8 items-center justify-center">
                   <Image
@@ -122,16 +122,16 @@ export default function Navbar() {
                     alt="Portfolio Logo"
                     width={100}
                     height={100}
-                    className="brightness-0"
+                    className="brightness-100"
                   />
                 </div>
               </div>
-              <div className="flex items-center space-x-8">
+              <div className="flex flex-col items-start space-y-4">
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="text-white hover:text-orange-400 transition-colors duration-300 font-medium cursor-pointer"
+                    className="text-lg text-white/90 hover:text-white transition-colors duration-300 font-medium cursor-pointer"
                   >
                     {item.name}
                   </Link>

@@ -477,13 +477,13 @@ export default function HomePage() {
             {currentProjects.map((project: Project, index: number) => (
               <Dialog key={project.id}>
                 <div
-                  className={`grid lg:grid-cols-2 gap-12 items-center ${
+                  className={`flex flex-col lg:grid lg:grid-cols-2 gap-12 items-center ${
                     index % 2 === 1 ? "lg:grid-flow-col-dense" : ""
                   }`}
                 >
                   {/* Project Content */}
                   <div
-                    className={`space-y-6 ${
+                    className={`space-y-6 lg:order-none ${
                       index % 2 === 1 ? "lg:col-start-2" : ""
                     }`}
                   >
@@ -564,7 +564,9 @@ export default function HomePage() {
                   </div>
 
                   {/* Project Image */}
-                  <div className={`${index % 2 === 1 ? "lg:col-start-1" : ""}`}>
+                  <div
+                    className={`order-first lg:order-none ${index % 2 === 1 ? "lg:col-start-1" : ""}`
+                  }>
                     <DialogTrigger asChild>
                       <div className="relative group cursor-pointer">
                         <div className="absolute inset-0 bg-orange-400/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
