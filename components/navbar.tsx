@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -30,12 +31,15 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+    <motion.header
+      className={`fixed top-0 z-50 w-full transition-all duration-500 ${
         isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-md border-b border-gray-200"
-          : "bg-[#323647] border-b border-[#323647]/20"
+          ? "bg-white/10 backdrop-blur-xl shadow-lg border-b border-white/20"
+          : "bg-slate-900/20 backdrop-blur-sm border-b border-purple-500/20"
       }`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex h-16 items-center">
         {/* Logo */}
@@ -86,18 +90,25 @@ export default function Navbar() {
           </div>
 
           <nav className="hidden md:flex items-center space-x-8 text-sm font-semibold tracking-wide">
-            {navigation.map((item) => (
-              <Link
+            {navigation.map((item, index) => (
+              <motion.div
                 key={item.name}
-                href={item.href}
-                className={`transition-all duration-300 hover:scale-105 cursor-pointer ${
-                  isScrolled
-                    ? "text-gray-700 hover:text-gray-900"
-                    : "text-white/90 hover:text-white"
-                }`}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 + 0.2 }}
               >
-                {item.name}
-              </Link>
+                <Link
+                  href={item.href}
+                  className={`relative transition-all duration-300 hover:scale-105 cursor-pointer group ${
+                    isScrolled
+                      ? "text-slate-800 hover:text-purple-600"
+                      : "text-white/90 hover:text-cyan-400"
+                  }`}
+                >
+                  {item.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-500 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              </motion.div>
             ))}
           </nav>
 
@@ -114,8 +125,8 @@ export default function Navbar() {
                 <span className="sr-only">Toggle Menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="pr-0 bg-[#323647] border-r-0">
-              <div className="flex items-center space-x-2 pb-4">
+            <SheetContent side="left" className="pr-0 bg-gradient-to-br from-slate-900 to-purple-900/50 backdrop-blur-xl border-r border-purple-500/20">
+              <div className="flex items-center space-x-2 pb-6">
                 <div className="flex h-8 w-8 items-center justify-center">
                   <Image
                     src="/Images/logoWhite.svg"
@@ -126,21 +137,29 @@ export default function Navbar() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col items-start space-y-4">
-                {navigation.map((item) => (
-                  <Link
+              <div className="flex flex-col items-start space-y-6">
+                {navigation.map((item, index) => (
+                  <motion.div
                     key={item.name}
-                    href={item.href}
-                    className="text-lg text-white/90 hover:text-white transition-colors duration-300 font-medium cursor-pointer"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
                   >
-                    {item.name}
-                  </Link>
+                    <Link
+                      href={item.href}
+                      className="text-lg text-white/90 hover:text-cyan-400 transition-colors duration-300 font-medium cursor-pointer relative group"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-500 transition-all duration-300 group-hover:w-full"></span>
+                    </Link>
+                  </motion.div>
                 ))}
               </div>
             </SheetContent>
           </Sheet>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }

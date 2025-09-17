@@ -31,8 +31,13 @@ import {
   GitBranch,
   Palette,
   Zap,
+  Star,
+  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { useRef } from "react";
 
 // Project type definition
 interface Project {
@@ -65,21 +70,21 @@ export default function HomePage() {
   ];
 
   const skills = [
-    { name: "React", icon: Code2, color: "text-blue-400" },
-    { name: "Next.js", icon: Globe, color: "text-gray-300" },
-    { name: "TypeScript", icon: Code2, color: "text-blue-500" },
-    { name: "JavaScript", icon: Zap, color: "text-yellow-400" },
-    { name: "Python", icon: Code2, color: "text-yellow-500" },
-    { name: "Django", icon: Server, color: "text-green-600" },
-    { name: "Node.js", icon: Server, color: "text-green-400" },
-    { name: "MongoDB", icon: Database, color: "text-green-500" },
-    { name: "WordPress", icon: Globe, color: "text-blue-600" },
-    { name: "Elementor", icon: Palette, color: "text-purple-500" },
-    { name: "WPBakery", icon: Code2, color: "text-cyan-400" },
-    { name: "GraphQL", icon: Database, color: "text-pink-500" },
-    { name: "Git", icon: GitBranch, color: "text-orange-400" },
-    { name: "CSS/Tailwind", icon: Palette, color: "text-pink-400" },
-    { name: "Full Stack", icon: Server, color: "text-indigo-400" },
+    { name: "React", icon: Code2, color: "from-cyan-400 to-blue-500", percentage: 95 },
+    { name: "Next.js", icon: Globe, color: "from-gray-400 to-gray-600", percentage: 90 },
+    { name: "TypeScript", icon: Code2, color: "from-blue-400 to-blue-600", percentage: 88 },
+    { name: "JavaScript", icon: Zap, color: "from-yellow-400 to-orange-500", percentage: 95 },
+    { name: "Python", icon: Code2, color: "from-green-400 to-blue-500", percentage: 85 },
+    { name: "Django", icon: Server, color: "from-green-500 to-emerald-600", percentage: 80 },
+    { name: "Node.js", icon: Server, color: "from-green-400 to-green-600", percentage: 85 },
+    { name: "MongoDB", icon: Database, color: "from-green-500 to-teal-600", percentage: 82 },
+    { name: "WordPress", icon: Globe, color: "from-blue-500 to-indigo-600", percentage: 90 },
+    { name: "Elementor", icon: Palette, color: "from-purple-400 to-pink-500", percentage: 88 },
+    { name: "WPBakery", icon: Code2, color: "from-cyan-400 to-teal-500", percentage: 85 },
+    { name: "GraphQL", icon: Database, color: "from-pink-400 to-rose-500", percentage: 78 },
+    { name: "Git", icon: GitBranch, color: "from-orange-400 to-red-500", percentage: 92 },
+    { name: "CSS/Tailwind", icon: Palette, color: "from-pink-400 to-purple-500", percentage: 93 },
+    { name: "Full Stack", icon: Server, color: "from-indigo-400 to-purple-600", percentage: 87 },
   ];
 
   const projects: Project[] = [
@@ -335,253 +340,509 @@ export default function HomePage() {
   }
 
   return (
-    <div>
+    <div className="relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5QzkyQUMiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-40"></div>
+        {/* Floating particles */}
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.3, 1, 0.3],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
+
       {/* Hero Section */}
-      <section id="home" className="min-h-screen bg-[#323647] flex items-center justify-center py-20">
+      <section id="home" className="min-h-screen flex items-center justify-center py-20 relative">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
-            <div className="text-white space-y-6">
+            <motion.div 
+              className="text-white space-y-6"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               <div>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                  Hi, I'm <span className="text-white">Ahmed Galal</span>
-                </h1>
-                <div className="flex items-center mt-4">
-                  <span className="text-orange-400 text-2xl md:text-3xl font-bold">
-                    {displayText}
-                    <span className="animate-pulse">|</span>
+                <motion.h1 
+                  className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                >
+                  Hi, I'm{" "}
+                  <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-pulse">
+                    Ahmed Galal
                   </span>
-                </div>
+                </motion.h1>
+                <motion.div 
+                  className="flex items-center mt-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                >
+                  <span className="bg-gradient-to-r from-orange-400 to-pink-500 bg-clip-text text-transparent text-2xl md:text-3xl font-bold">
+                    {displayText}
+                    <span className="animate-pulse text-cyan-400">|</span>
+                  </span>
+                </motion.div>
               </div>
 
-              <p className="text-gray-300 text-lg leading-relaxed max-w-lg">
-                I’m a results-driven full-stack developer with a passion for
+              <motion.p 
+                className="text-gray-300 text-lg leading-relaxed max-w-lg"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+              >
+                I'm a results-driven full-stack developer with a passion for
                 turning ideas into powerful web applications. With expertise in
                 modern JavaScript frameworks and a strong eye for design, I
                 craft solutions that are fast, scalable, and user-focused.
-                Whether it’s building from scratch or optimizing existing
+                Whether it's building from scratch or optimizing existing
                 projects, I deliver code that makes an impact.
-              </p>
+              </motion.p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <a
+              <motion.div 
+                className="flex flex-col sm:flex-row gap-4 pt-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1 }}
+              >
+                <motion.a
                   href="/images/AhmedGalalCv.pdf"
                   download="AhmedGalalCV.pdf"
                   className="cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <Button
-                    className="bg-orange-400 cursor-pointer  hover:bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+                    className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-cyan-500/25"
                     size="lg"
                   >
                     <Download className="mr-2 h-5 w-5" />
                     Download CV
                   </Button>
-                </a>
-                <a
+                </motion.a>
+                <motion.a
                   href="mailto:Ahmedgalalui@gmail.com"
                   className="cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <Button
                     variant="outline"
-                    className="border-orange-400 cursor-pointer text-orange-400 hover:bg-orange-400 hover:text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+                    className="border-2 border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 backdrop-blur-sm"
                     size="lg"
                   >
                     <Mail className="mr-2 h-5 w-5" />
                     Let's Connect
+                    <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-                </a>
-              </div>
-            </div>
+                </motion.a>
+              </motion.div>
+            </motion.div>
 
             {/* Right Content - Profile Image */}
-            <div className="flex justify-center lg:justify-end">
+            <motion.div 
+              className="flex justify-center lg:justify-end"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
               <div className="relative">
-                {/* Orange glow background */}
-                <div className="absolute inset-0 bg-orange-400 rounded-full blur-3xl opacity-30 scale-110"></div>
+                {/* Animated gradient background */}
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-full blur-3xl opacity-30 scale-110"
+                  animate={{
+                    rotate: 360,
+                    scale: [1.1, 1.2, 1.1],
+                  }}
+                  transition={{
+                    rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+                    scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+                  }}
+                ></motion.div>
 
                 {/* Profile image container */}
-                <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-orange-400 shadow-2xl">
-                  <Image
-                    src="/Images/ahmedgalalImh.png"
-                    alt="Ahmed Galal"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
+                <motion.div 
+                  className="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-transparent bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 p-1 shadow-2xl"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="w-full h-full rounded-full overflow-hidden bg-slate-900">
+                    <Image
+                      src="/Images/ahmedgalalImh.png"
+                      alt="Ahmed Galal"
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
+                </motion.div>
 
-                {/* Decorative elements */}
-                <div className="absolute -top-4 -right-4 w-8 h-8 bg-orange-400 rounded-full opacity-60"></div>
-                <div className="absolute -bottom-6 -left-6 w-12 h-12 bg-orange-400 rounded-full opacity-40"></div>
+                {/* Floating decorative elements */}
+                <motion.div 
+                  className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full"
+                  animate={{
+                    y: [0, -10, 0],
+                    rotate: [0, 180, 360],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <Sparkles className="w-full h-full text-white p-1" />
+                </motion.div>
+                <motion.div 
+                  className="absolute -bottom-6 -left-6 w-12 h-12 bg-gradient-to-r from-pink-400 to-orange-500 rounded-full"
+                  animate={{
+                    y: [0, 10, 0],
+                    rotate: [0, -180, -360],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <Star className="w-full h-full text-white p-2" />
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="bg-[#242734] py-20">
+      <section id="skills" className="relative py-20 bg-gradient-to-br from-slate-900/50 to-purple-900/30 backdrop-blur-sm">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold text-orange-400 mb-8">
-              🚀 Skills & Expertise
-            </h2>
-            <p className="text-gray-300 text-lg leading-relaxed mb-16">
-              I’m passionate about building modern, scalable, and user-friendly
+          <motion.div 
+            className="text-center max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              ⚡ Skills & Expertise
+            </motion.h2>
+            <motion.p 
+              className="text-gray-300 text-lg leading-relaxed mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              I'm passionate about building modern, scalable, and user-friendly
               web applications. My expertise spans both frontend and backend
               development, allowing me to deliver complete end-to-end solutions.
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-5xl mx-auto">
+            </motion.p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {skills.map((skill, index) => {
                 const IconComponent = skill.icon;
                 return (
-                  <div
+                  <motion.div
                     key={index}
-                    className="group bg-[#323647] p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-gray-600/30 cursor-pointer"
+                    className="group relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm p-6 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 cursor-pointer overflow-hidden"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    whileHover={{ 
+                      scale: 1.05,
+                      boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)"
+                    }}
                   >
-                    <div className="flex flex-col items-center space-y-3">
-                      <div
-                        className={`w-12 h-12 ${skill.color} group-hover:scale-110 transition-transform duration-300`}
+                    {/* Animated background gradient */}
+                    <div className={`absolute inset-0 bg-gradient-to-r ${skill.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+                    
+                    <div className="relative flex items-center space-x-4">
+                      <motion.div
+                        className={`w-16 h-16 bg-gradient-to-r ${skill.color} rounded-xl flex items-center justify-center shadow-lg`}
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6 }}
                       >
-                        <IconComponent size={48} />
+                        <IconComponent size={32} className="text-white" />
+                      </motion.div>
+                      
+                      <div className="flex-1">
+                        <h3 className="text-white font-bold text-lg mb-2">
+                          {skill.name}
+                        </h3>
+                        
+                        {/* Progress bar */}
+                        <div className="w-full bg-slate-700 rounded-full h-2 mb-2">
+                          <motion.div
+                            className={`h-2 bg-gradient-to-r ${skill.color} rounded-full`}
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${skill.percentage}%` }}
+                            transition={{ duration: 1.5, delay: index * 0.1 + 0.5 }}
+                            viewport={{ once: true }}
+                          />
+                        </div>
+                        
+                        <motion.span 
+                          className="text-gray-400 text-sm font-medium"
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          transition={{ duration: 0.6, delay: index * 0.1 + 1 }}
+                          viewport={{ once: true }}
+                        >
+                          {skill.percentage}%
+                        </motion.span>
                       </div>
-                      <h3 className="text-white font-semibold text-sm text-center">
-                        {skill.name}
-                      </h3>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="bg-[#323647] py-20">
+      <section id="projects" className="relative py-20 bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-orange-400 mb-8">
-              Projects
-            </h2>
-            <div className="text-center mt-16">
-              <p className="text-sm text-gray-400">
-                Note: Some project repositories are private. Please contact me
-                for access to the code.
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              🚀 Featured Projects
+            </motion.h2>
+            <motion.div 
+              className="text-center mt-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              <p className="text-gray-400 bg-slate-800/50 backdrop-blur-sm px-6 py-3 rounded-full inline-block border border-purple-500/20">
+                💡 Some project repositories are private. Please contact me for access to the code.
               </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           <div className="max-w-6xl mx-auto space-y-20">
             {currentProjects.map((project: Project, index: number) => (
               <Dialog key={project.id}>
-                <div
+                <motion.div
                   className={`flex flex-col lg:grid lg:grid-cols-2 gap-12 items-center ${
                     index % 2 === 1 ? "lg:grid-flow-col-dense" : ""
                   }`}
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  viewport={{ once: true }}
                 >
                   {/* Project Content */}
-                  <div
+                  <motion.div
                     className={`space-y-6 lg:order-none ${
                       index % 2 === 1 ? "lg:col-start-2" : ""
                     }`}
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, delay: index * 0.2 + 0.2 }}
+                    viewport={{ once: true }}
                   >
-                    <h3 className="text-2xl md:text-3xl font-bold text-white">
+                    <motion.h3 
+                      className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.2 + 0.4 }}
+                      viewport={{ once: true }}
+                    >
                       {project.title}
-                    </h3>
+                    </motion.h3>
                     {typeof project.description === "string" ? (
-                      <p className="text-gray-300 text-sm leading-relaxed">
+                      <motion.p 
+                        className="text-gray-300 text-base leading-relaxed"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: index * 0.2 + 0.6 }}
+                        viewport={{ once: true }}
+                      >
                         {project.description}
-                      </p>
+                      </motion.p>
                     ) : (
-                      <div>
-                        <p className="text-gray-300 text-sm leading-relaxed mb-2">
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: index * 0.2 + 0.6 }}
+                        viewport={{ once: true }}
+                      >
+                        <p className="text-gray-300 text-base leading-relaxed mb-4">
                           {project.description.title}
                         </p>
-                        <ul className="list-disc list-inside text-gray-300 text-sm space-y-1">
+                        <ul className="list-none text-gray-300 text-sm space-y-2">
                           {project.description.points.map((point, i) => (
-                            <li key={i}>{point}</li>
+                            <motion.li 
+                              key={i} 
+                              className="flex items-start space-x-2"
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.4, delay: index * 0.2 + 0.8 + i * 0.1 }}
+                              viewport={{ once: true }}
+                            >
+                              <span className="text-cyan-400 mt-1">▶</span>
+                              <span>{point}</span>
+                            </motion.li>
                           ))}
                         </ul>
-                      </div>
+                      </motion.div>
                     )}
-                    <div className="flex flex-wrap gap-2 mb-6">
+                    <motion.div 
+                      className="flex flex-wrap gap-3 mb-6"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.2 + 0.8 }}
+                      viewport={{ once: true }}
+                    >
                       {project.technologies.map(
                         (tech: string, techIndex: number) => (
-                          <span
+                          <motion.span
                             key={techIndex}
-                            className="px-3 py-1 bg-orange-400/20 text-orange-400 rounded-full text-sm font-medium"
+                            className="px-4 py-2 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 text-cyan-400 rounded-full text-sm font-medium border border-purple-500/30 backdrop-blur-sm"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.4, delay: index * 0.2 + 1 + techIndex * 0.1 }}
+                            viewport={{ once: true }}
+                            whileHover={{ scale: 1.1, boxShadow: "0 0 20px rgba(34, 211, 238, 0.4)" }}
                           >
                             {tech}
-                          </span>
+                          </motion.span>
                         )
                       )}
-                    </div>
-                    <div className="flex flex-col sm:flex-row gap-4">
+                    </motion.div>
+                    <motion.div 
+                      className="flex flex-col sm:flex-row gap-4"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.2 + 1.2 }}
+                      viewport={{ once: true }}
+                    >
                       {project.liveUrl ? (
-                        <Link
-                          href={project.liveUrl}
-                          target="_blank"
-                          className="cursor-pointer"
-                        >
-                          <Button className="bg-orange-400 cursor-pointer hover:bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105">
-                            View Live
-                          </Button>
-                        </Link>
+                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                          <Link
+                            href={project.liveUrl}
+                            target="_blank"
+                            className="cursor-pointer"
+                          >
+                            <Button className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-cyan-500/25">
+                              <Globe className="mr-2 h-5 w-5" />
+                              View Live
+                            </Button>
+                          </Link>
+                        </motion.div>
                       ) : (
                         <Button
                           variant="outline"
-                          className="border-gray-500 text-gray-500 px-6 py-3 rounded-lg font-semibold cursor-not-allowed"
+                          className="border-gray-500 text-gray-500 px-8 py-3 rounded-xl font-semibold cursor-not-allowed backdrop-blur-sm"
                           disabled
                         >
                           Live demo available upon request
                         </Button>
                       )}
                       {project.codeUrl ? (
-                        <Link
-                          href={project.codeUrl}
-                          target="_blank"
-                          className="cursor-pointer"
-                        >
-                          <Button
-                            variant="outline"
-                            className="border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                          <Link
+                            href={project.codeUrl}
+                            target="_blank"
+                            className="cursor-pointer"
                           >
-                            View Code
-                          </Button>
-                        </Link>
+                            <Button
+                              variant="outline"
+                              className="border-2 border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 backdrop-blur-sm"
+                            >
+                              <Code2 className="mr-2 h-5 w-5" />
+                              View Code
+                            </Button>
+                          </Link>
+                        </motion.div>
                       ) : (
                         <Button
                           variant="outline"
-                          className="border-gray-500 text-gray-500 px-6 py-3 rounded-lg font-semibold cursor-not-allowed"
+                          className="border-gray-500 text-gray-500 px-8 py-3 rounded-xl font-semibold cursor-not-allowed backdrop-blur-sm"
                           disabled
                         >
                           Private Repository
                         </Button>
                       )}
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
 
                   {/* Project Image */}
-                  <div
-                    className={`order-first lg:order-none ${index % 2 === 1 ? "lg:col-start-1" : ""}`
-                  }>
+                  <motion.div
+                    className={`order-first lg:order-none ${index % 2 === 1 ? "lg:col-start-1" : ""}`}
+                    initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, delay: index * 0.2 + 0.4 }}
+                    viewport={{ once: true }}
+                  >
                     <DialogTrigger asChild>
-                      <div className="relative group cursor-pointer">
-                        <div className="absolute inset-0 bg-orange-400/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <motion.div 
+                        className="relative group cursor-pointer"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-purple-500/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-2xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
                         <img
                           src={project.images[0]}
                           alt={project.title}
-                          className="w-full h-64 md:h-80 object-cover rounded-lg shadow-2xl group-hover:scale-105 transition-transform duration-300"
+                          className="relative w-full h-64 md:h-80 object-cover rounded-2xl shadow-2xl border border-purple-500/20 backdrop-blur-sm"
                         />
-                      </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <motion.div
+                            className="bg-white/10 backdrop-blur-sm rounded-full p-4"
+                            initial={{ scale: 0 }}
+                            whileHover={{ scale: 1 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            <Sparkles className="w-8 h-8 text-cyan-400" />
+                          </motion.div>
+                        </div>
+                      </motion.div>
                     </DialogTrigger>
-                  </div>
-                </div>
-                <DialogContent className="bg-[#323647] border-orange-400 text-white max-w-4xl">
+                  </motion.div>
+                </motion.div>
+                <DialogContent className="bg-gradient-to-br from-slate-900 to-purple-900/50 border-2 border-purple-500/30 text-white max-w-4xl backdrop-blur-xl">
                   <DialogHeader>
-                    <DialogTitle className="text-orange-400 text-2xl">
+                    <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
                       {project.title}
                     </DialogTitle>
                   </DialogHeader>
@@ -594,14 +855,14 @@ export default function HomePage() {
                               src={image}
                               alt={`${project.title} screenshot ${i + 1}`}
                               fill
-                              className="object-contain rounded-lg"
+                              className="object-contain rounded-xl border border-purple-500/20"
                             />
                           </div>
                         </CarouselItem>
                       ))}
                     </CarouselContent>
-                    <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white border-none hover:bg-black/75" />
-                    <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white border-none hover:bg-black/75" />
+                    <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white border-none hover:from-cyan-600 hover:to-purple-700 shadow-lg" />
+                    <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white border-none hover:from-cyan-600 hover:to-purple-700 shadow-lg" />
                   </Carousel>
                 </DialogContent>
               </Dialog>
@@ -632,69 +893,136 @@ export default function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-[#242734]">
+      <section id="contact" className="relative py-20 bg-gradient-to-br from-slate-900/50 to-purple-900/30 backdrop-blur-sm">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#FFAF29] mb-4">
-              <span className="text-[#FFAF29]">Contact</span> Me
-            </h2>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              💬 Let's Connect
+            </motion.h2>
+            <motion.p 
+              className="text-lg text-gray-300 max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
               Let's discuss your next project or just say hello. I'm always open
               to new opportunities and interesting conversations.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {/* Email */}
-            <div className="text-center p-8 bg-[#323647] rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-gray-600/30 cursor-pointer">
-              <div className="w-20 h-20 bg-gradient-to-br from-[#FFAF29] to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+            <motion.div 
+              className="text-center p-8 bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 hover:border-purple-500/40 cursor-pointer group"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)"
+              }}
+            >
+              <motion.div 
+                className="w-20 h-20 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg"
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.6 }}
+              >
                 <Mail className="w-10 h-10 text-white" />
-              </div>
+              </motion.div>
               <h3 className="text-xl font-semibold text-white mb-3">Email</h3>
-              <a href="mailto:Ahmedgalalui@gmail.com">
+              <a href="mailto:Ahmedgalalui@gmail.com" className="group-hover:text-cyan-400 transition-colors duration-300">
                 <p className="text-gray-300 text-sm">Ahmedgalalui@gmail.com</p>
               </a>
-            </div>
+            </motion.div>
 
             {/* Phone */}
-            <div className="text-center p-8 bg-[#323647] rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-gray-600/30 cursor-pointer">
-              <div className="w-20 h-20 bg-gradient-to-br from-[#FFAF29] to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+            <motion.div 
+              className="text-center p-8 bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 hover:border-purple-500/40 cursor-pointer group"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)"
+              }}
+            >
+              <motion.div 
+                className="w-20 h-20 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg"
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.6 }}
+              >
                 <Phone className="w-10 h-10 text-white" />
-              </div>
+              </motion.div>
               <h3 className="text-xl font-semibold text-white mb-3">Phone</h3>
-
-              <a href="tel:+201004084914">
-                {" "}
-                <p className="text-gray-300 text-sm">+20 100 408 4914</p>
-              </a>
-              <a href="tel:+201559553925">
-                {" "}
-                <p className="text-gray-300 text-sm">+20 155 955 3925</p>
-              </a>
-            </div>
+              <div className="space-y-1">
+                <a href="tel:+201004084914" className="block group-hover:text-purple-400 transition-colors duration-300">
+                  <p className="text-gray-300 text-sm">+20 100 408 4914</p>
+                </a>
+                <a href="tel:+201559553925" className="block group-hover:text-purple-400 transition-colors duration-300">
+                  <p className="text-gray-300 text-sm">+20 155 955 3925</p>
+                </a>
+              </div>
+            </motion.div>
 
             {/* Location */}
-            <div className="text-center p-8 bg-[#323647] rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-gray-600/30 md:col-span-2 lg:col-span-1 cursor-pointer">
-              <div className="w-20 h-20 bg-gradient-to-br from-[#FFAF29] to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+            <motion.div 
+              className="text-center p-8 bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 hover:border-purple-500/40 md:col-span-2 lg:col-span-1 cursor-pointer group"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              viewport={{ once: true }}
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)"
+              }}
+            >
+              <motion.div 
+                className="w-20 h-20 bg-gradient-to-br from-pink-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg"
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.6 }}
+              >
                 <MapPin className="w-10 h-10 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-3">
-                Location
-              </h3>
-              <p className="text-gray-300 text-sm">Cairo, Egypt</p>
-            </div>
+              </motion.div>
+              <h3 className="text-xl font-semibold text-white mb-3">Location</h3>
+              <p className="text-gray-300 text-sm group-hover:text-pink-400 transition-colors duration-300">Cairo, Egypt</p>
+            </motion.div>
           </div>
 
           {/* Call to Action */}
-          <div className="text-center mt-12">
-            <a href="mailto:Ahmedgalalui@gmail.com">
-              {" "}
-              <Button className="bg-gradient-to-r from-[#FFAF29] to-orange-500 hover:from-orange-500 hover:to-[#FFAF29] text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
+          <motion.div 
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <motion.a 
+              href="mailto:Ahmedgalalui@gmail.com"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white px-12 py-4 text-lg font-semibold rounded-2xl shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 cursor-pointer">
                 <Mail className="w-5 h-5 mr-2" />
                 Get In Touch
+                <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
         </div>
       </section>
     </div>
